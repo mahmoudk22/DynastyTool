@@ -1,10 +1,10 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { getUser, getLeagues } from "../lib/sleeper"
 
-export default function LeaguesPage() {
+function LeaguesContent() {
   const params = useSearchParams()
   const router = useRouter()
   const username = params.get("username")
@@ -42,5 +42,13 @@ export default function LeaguesPage() {
         ))}
       </select>
     </div>
+  )
+}
+
+export default function LeaguesPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LeaguesContent />
+    </Suspense>
   )
 }
